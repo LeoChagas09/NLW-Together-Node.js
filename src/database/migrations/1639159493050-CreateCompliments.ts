@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
 export class CreateCompliments1639159493050 implements MigrationInterface {
 
@@ -37,7 +37,28 @@ export class CreateCompliments1639159493050 implements MigrationInterface {
 
                 ],
                 foreignKeys: [
+                    {
+                        name: "FKUserSenderCompliments",
+                        referencedTableName: "users",
+                        referencedColumnNames: ["id"],
+                        columnNames: ["user_sender"],
+                        onDelete: "SET NULL",
+                        onUpdate: "SET NULL"
+
+                    }
                 ]
+            })
+        )
+
+        await queryRunner.createForeignKey(
+            "compliments",
+            new TableForeignKey({
+                name: "FKUserSenderCompliments",
+                referencedTableName: "users",
+                referencedColumnNames: ["id"],
+                columnNames: ["user_sender"],
+                onDelete: "SET NULL",
+                onUpdate: "SET NULL"
             })
         )
     }
